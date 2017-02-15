@@ -1,118 +1,102 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline; }
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
 
 body {
-  -webkit-backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-size-adjust: none;
-  font: 16px/1.25 "Arsenal", sans-serif; }
+    -webkit-backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: none;
+    font: 16px/1.25 "Arsenal", sans-serif;
+}
 
 ol, ul {
-  list-style: none; }
+    list-style: none;
+}
 
 blockquote, q {
-  quotes: none; }
+    quotes: none;
+}
 
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none; }
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
 
 table {
-  border-collapse: collapse;
-  border-spacing: 0; }
+    border-collapse: collapse;
+    border-spacing: 0;
+}
 
 img {
-  border: 0;
-  height: auto;
-  max-width: 100%; }
+    border: 0;
+    height: auto;
+    max-width: 100%;
+}
 
 *, *:before, *:after {
-  box-sizing: border-box; }
+    box-sizing: border-box;
+}
 
 ::-moz-selection {
-  color: #fff;
-  background: #2c3e50; }
+    color: #fff;
+    background: #2c3e50;
+}
 
 ::selection {
-  color: #fff;
-  background: #2c3e50; }
+    color: #fff;
+    background: #2c3e50;
+}
 
 body {
-  background: url('../images/pedalpub.png') no-repeat fixed center;
-  color: #fff;
-  font-family: 'Pavanam', sans-serif;
-  padding: 25px;
-  overflow: hidden; }
+    background: url('../images/pedalpub.png') no-repeat fixed center;
+    color: black;
+    font-family: 'Pavanam', sans-serif;
+    padding: 25px;
+    overflow: hidden;
+    text-align: center;
+}
+h1 {
+  font-size: 30px;
+  font-weight: 700;
+}
+.lady-name {
+  width:  100px;
+}
 
 .container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap; }
-
-.ladyContainer {
-  float: left;
-  margin: 5px; }
-
-.ladyContainer .lady {
-  background: url('../images/person.png') no-repeat center center;
-  background-size: contain;
-  height: 150px;
-  left: 0;
-  margin: 0 auto;
-  position: relative;
-  opacity: 1;
-  bottom: -256px;
-  width: 70px; }
-
-.ladyInfo {
-
-}
-.addBtn {
-
-}
-.ladyInput {
-
+    display: flex;
+    justify-content: center;
+    width: calc(100% - 200px);
+    margin: 0 auto;
+    position: absolute;
+    top: calc(50% - 100px);
+    text-align: center;
 }
 
-.has-spacer:after {
-  background: #333;
-  content: '';
-  display: block;
-  height: 1px;
-  margin: 0.25rem 0;
-  width: 100%; }
+.lady-container {
+    background: url('../images/person.png') no-repeat center center;
+    background-size: contain;
+    left: 0;
+    opacity: 1;
+    top: 50%;
+    height: 200px;
+    padding: 5px;
+}
+
+.message {
+  font-style: italic;
+  color: gray;
+}
+
+.buttons {
+    text-align: center;
+}
 
 .is-hidden {
-  display: none; }
-
-.is-flex {
-  align-items: stretch;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; }
-
-.is-strong {
-  font-weight: 700; }
-
-.is-centered {
-  text-align: center; }
-
-/*# sourceMappingURL=app.css.map */
+    display: none;
+}

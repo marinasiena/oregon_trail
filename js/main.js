@@ -1,156 +1,151 @@
-// (function() {
+( function() {
 
-console.clear();
-"use strict";
+	"use strict";
+	console.clear();
 
-const container = document.querySelector('.container');
+	const LadiesOnThePedalBar = function() {
 
-class Lady {
-    constructor(name) {
-        this.name = name;
-        this.beer = Math.floor(Math.random() * 50) + 10;;
-        this.drunk = Math.floor(Math.random() * 2) == 0;
-        this.init();
-    } //end constructor
+    const container = document.querySelector( '.container' );
+    const message = document.querySelector( '.message' );
+    const barInfo = document.querySelector( '.bar-info' );
+    const drunkInfo = document.querySelector( '.drunk-info' );
+    let allBeer = 0;
+    let tapResultAll = 0;
+		let pedalBar = null;
+		let count = 0;
 
-    setup() {
-        const ladyContainer = document.createElement('div');
-        const lady = document.createElement('div');
-        const info = document.createElement('p');
+		class Lady {
+			constructor( name ) {
+				this.name = name;
+				this.beer = Math.floor( Math.random() * 50 ) + 10;
+				this.drunk = Math.floor( Math.random() * 2 ) === 0;
+				this.setup( this.name, this.beer, this.drunk );
+        this.tap();
+        this.drink();
+			} //end constructor
 
-        ladyContainer.className = `ladyContainer ${this.name}`;
-        lady.className = 'lady';
-        info.textContent = this.name;
-        info.style.backgroundColor = 'black';
-        info.style.bottom = '230px';
-        info.style.color = 'magenta';
-        info.style.padding = '0 5px';
-        info.style.position = 'absolute';
+			setup( name, beer, drunk ) {
+				console.log( 'setup lady:', this.name, this.beer, this.drunk );
+				const ladyContainer = document.createElement( 'div' );
+				const lady = document.createElement( 'div' );
+				const ladyInfo = document.createElement( 'p' );
 
-        ladyContainer.appendChild(lady);
-        ladyContainer.appendChild(info);
-        container.appendChild(ladyContainer);
+				ladyContainer.className = `lady-container ${this.name}`;
+				lady.className = 'lady';
+				ladyInfo.className = 'lady-info';
+				ladyInfo.textContent = this.name;
 
-    return {
-        container: ladyContainer,
-        lady: lady,
-        info: info
-    };
-} //end setup
+				ladyContainer.appendChild( lady );
+				ladyContainer.appendChild( ladyInfo );
+				container.appendChild( ladyContainer );
 
-init() {
-    this.regions = this.setup();
-    console.log('the-regions', this.regions);
-}//end init
+				pedalBar.add( this.name, this.beer, this.drunk );
+      } //end setup
 
-drink() {
-    if (this.beer >= 10) {
-        this.beer -= 10;
-    } else {
-        this.beer = 0;
-    }
-} //end drink
+        drink() {
+          let drinkBtn = document.querySelector( '.drink' );
+          drinkBtn.addEventListener( 'click', () => {
+            event.preventDefault();
+            if ( allBeer > 10 ) {
+              allBeer = (allBeer - 10);
+            } else {
+              allBeer = 0;
+            }
+            message.textContent = 'Drinking up ... 10oz beer gone per lady ...';
+            barInfo.textContent = `The ladies have ${allBeer} oz of beer on the PedalBar`;
+          } );
+          return;
+        } //end drink
 
-tap() {
-    let tapResult = (Math.floor(Math.random() * 20) + 1);
-    let success = (Math.floor(Math.random() * 2) == 0);
-    if (success == 1) {
+      tap() {
+        let tapBtn = document.querySelector( '.tap' );
+        tapBtn.addEventListener( 'click', () => {
+          event.preventDefault();
+          console.log('in', allBeer);
+          let tapResult = ( Math.floor( Math.random() * 20 ) + 1 );
+          let success = ( Math.floor( Math.random() * 2 ) === 0 );
+          if ( success == 1 ) {
+            tapResult++;
+          } else {
+          }
+          allBeer = allBeer + tapResult;
+          this.displayTap(allBeer);
+        } );
+      } //end tap
 
-        this.beer += tapResult;
-        console.log(`You hit the tap!  You add ${tapResult} oz to your beer!`);
-    } else {
-        console.log('Bike hit a bump.  You dropped the tap.')
-    }
-    console.log("beer after tap: ", this.beer);
-} //end tap
+      displayTap(allBeer) {
+        message.textContent = `You hit the tap!`;
+        barInfo.textContent = `The ladies have ${allBeer} oz of beer on the PedalBar`;
+      }//end displayTap
 
-} //end Lady
+		} //end Lady
 
 
-class PedalBar {
-    constructor() {
-        this.occupants = [];
-        this.allBeer = null;
-        this.isDrunk = null;
-    } //end constructor
+		class PedalBar {
+			constructor() {
+				this.isDrunk = 0;
+			} //end constructor
 
-    setup() {
-      const pedalBarInfo = document.createElement('p');
-      pedalBarInfo.textContent = `There's ${this.allBeer} oz of beer on the PedalBar`;
-      container.appendChild(pedalBarInfo);
-      pedalBarInfo.style.backgroundColor = 'black';
-      pedalBarInfo.style.color = 'chartreuse';
-      pedalBarInfo.style.padding = '20px';
-      pedalBarInfo.style.position = 'absolute';
-      pedalBarInfo.style.textAlign = 'center';
-      pedalBarInfo.style.width = '100%';
+			barInfo() {
+				barInfo.textContent = `The ladies have ${allBeer} oz of beer on the PedalBar`;
 
-    } //end setup
+				if ( this.isDrunk >= 4 ) {
+					drunkInfo.textContent = `${this.isDrunk} drunk ladies: Woooo girl! Watch this!`;
+				} else if ( ( this.isDrunk <= 3 ) && ( this.isDrunk >= 2 ) ) {
+					drunkInfo.textContent = `${this.isDrunk} drunk ladies: OMG did you hear about Lisa??`;
+				} else {
+					drunkInfo.textContent = `${this.isDrunk} drunk: I'm soooo bored ...`;
+				}
+			} //end setup
 
-    add(name) {
-        if (this.occupants.length < 6) {
-            this.occupants.push(name);
-            console.log('Space on the pedalBar', this.occupants);
-        } else {
-            console.log(`No more space on the PedalBar, honey.`);
-        }
-    } //end add
+			add( name, beer, drunk ) {
+				let buttons = document.querySelector( '.buttons' );
+				buttons.classList.remove( 'is-hidden' );
+				this.checkBeer( beer );
+				this.checkHealth( drunk );
+				this.barInfo();
+			} //end add
 
-    checkBeer() {
-        for (let i = 0; i < this.occupants.length; i++) {
-            this.allBeer = this.allBeer + this.occupants[i].beer;
-            console.log(this.allBeer);
-        }
-    } //end checkBeer
+			checkBeer( beer ) {
+				allBeer = allBeer + beer;
+			} //end checkBeer
 
-    colorDrunk() {
-      // this isn't working - the this.occupants isn't targeting the css??
-        for (let i = 0; i < this.occupants.length; i++) {
-          if (this.occupants.drunk == true) {
-            this.occupants[i].style.filter = 'hue-rotate(30deg)';
-            console.log('drunk is yes');
-        }
-      }
-    }
+			checkHealth( drunk ) {
+				if ( drunk === true ) {
+					this.isDrunk = this.isDrunk + 1;
+				}
+			} //end checkHealth
 
-    checkHealth() {
-        for (let i = 0; i < this.occupants.length; i++) {
-            if (this.occupants[i].drunk == true)
-                this.isDrunk += 1;
-        }
-        if (this.isDrunk >= 4) {
-            console.log(`${this.isDrunk} folks: Woooo girl! Watch this!`);
-        } else if ((this.isDrunk <= 3) && (this.isDrunk >= 2)) {
-            console.log(`${this.isDrunk} folks: OMG did you hear about Lisa??`);
-        } else {
-            console.log(`${this.isSick} folks: I'm soooo bored ...`);
-        }
-    } //end checkHealth
+		} //end Wagon
 
-} //end Wagon
+		function getLady() {
 
-const elaine = new Lady('Elaine');
-const sarah = new Lady('Sarah');
-const cathy = new Lady('Cathy');
-const laura = new Lady('Laura');
-const dee = new Lady('Dee');
-const diana = new Lady('Diana');
-// const maude = new Lady('Maude');
-console.log('Lady: ', Lady);
+			let ladyForm = document.getElementById( 'add-lady' );
+			let ladyName = document.querySelector( '.lady-name' );
+			ladyForm.addEventListener( 'submit', () => {
+				event.preventDefault();
+				count++;
+				if ( count > 5 ) {
+          message.textContent = 'No more room on the Pedal Bar, honey.';
+				} else {
+					new Lady( ladyName.value );
+				}
+				ladyName.value = '';
+			} );
+		} //end bindEvents
 
-const pedalBar = new PedalBar();
+		function init() {
+			// debugger;
+			pedalBar = new PedalBar();
+			getLady();
+		}
 
-pedalBar.add(elaine);
-pedalBar.add(sarah);
-pedalBar.add(cathy);
-pedalBar.add(laura);
-pedalBar.add(dee);
-pedalBar.add(diana);
-// pedalBar.add(maude);
+		return {
+			init: init
+		};
 
-pedalBar.checkBeer();
-pedalBar.checkHealth();
-pedalBar.colorDrunk();
-pedalBar.setup();
+	}; //end constLadiesOnThePedalBar
+	const playPedalBar = LadiesOnThePedalBar();
+	playPedalBar.init();
 
-// })(); //end iife
+} )(); //end iife
